@@ -31,6 +31,7 @@ module.exports = (env = {}) => {
     resolve: {
       alias: {
         react: resolve(__dirname, 'node_modules', 'react'),
+        'react-dom': resolve(__dirname, 'node_modules', 'react-dom'),
       },
     },
   }

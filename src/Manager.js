@@ -4,6 +4,7 @@ import { getBestAnchorGivenScrollLocation, getScrollTop } from './utils/scroll'
 import { getHash, updateHash, removeHash } from './utils/hash'
 
 const defaultConfig = {
+  offsetShift: 0, //ardas
   offset: 0,
   scrollDuration: 400,
   keepLastAnchorHash: false,
@@ -14,6 +15,9 @@ class Manager {
     this.anchors = {}
     this.forcedHash = false
     this.config = defaultConfig
+    //ardas
+    this.startHashChange = true
+    //
 
     this.scrollHandler = debounce(this.handleScroll, 100)
     this.forceHashUpdate = debounce(this.handleHashChange, 1)
@@ -60,8 +64,15 @@ class Manager {
   }
 
   handleScroll = () => {
-    const {offset, keepLastAnchorHash} = this.config
-    const bestAnchorId = getBestAnchorGivenScrollLocation(this.anchors, offset)
+    //ardas
+    if (this.click) {
+      this.click = false
+      return
+    }
+    //
+
+    const {offset, offsetShift, keepLastAnchorHash} = this.config  // add offsetShift /ardas
+    const bestAnchorId = getBestAnchorGivenScrollLocation(this.anchors, offset + offsetShift) // add offsetShift /ardas
 
     if (bestAnchorId && getHash() !== bestAnchorId) {
       this.forcedHash = true
@@ -80,6 +91,13 @@ class Manager {
   }
 
   goToSection = (id) => {
+    //ardas
+    if (this.startHashChange) {
+      this.startHashChange = false
+    } else {
+      this.click = true
+    }
+    //
     let element = this.anchors[id]
     if (element) {
       jump(element, {
