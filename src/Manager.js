@@ -5,6 +5,7 @@ import { getHash, updateHash, removeHash } from './utils/hash'
 
 const defaultConfig = {
   offsetShift: 0, //ardas
+  handleScrollTimeout: 100, //ardas
   offset: 0,
   scrollDuration: 400,
   keepLastAnchorHash: false,
@@ -19,7 +20,7 @@ class Manager {
     this.startHashChange = true
     //
 
-    this.scrollHandler = debounce(this.handleScroll, 100)
+    this.scrollHandler = debounce(this.handleScroll, this.getScrollTimeout)
     this.forceHashUpdate = debounce(this.handleHashChange, 1)
   }
 
@@ -27,6 +28,8 @@ class Manager {
     window.addEventListener('scroll', this.scrollHandler, false)
     window.addEventListener('hashchange', this.handleHashChange)
   }
+
+  getScrollTimeout = () => this.config.handleScrollTimeout;
 
   removeListeners = () => {
     window.removeEventListener('scroll', this.scrollHandler, false)
