@@ -12,7 +12,7 @@ export const debounce = (func, wait, immediate) => {
     const callNow = immediate && !timeout
     clearTimeout(timeout)
     const delay = typeof wait === 'function' ? wait() : wait
-    timeout = setTimeout(later, wait)
+    timeout = setTimeout(later, delay)
     if (callNow) {
       func.apply(context, args)
     }

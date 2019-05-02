@@ -68,7 +68,6 @@ class Manager {
 
   handleScroll = () => {
     //ardas
-    console.log('handleScroll');
     if (this.click) {
       this.click = false
       return
@@ -77,7 +76,6 @@ class Manager {
 
     const {offset, offsetShift, keepLastAnchorHash} = this.config  // add offsetShift /ardas
     const bestAnchorId = getBestAnchorGivenScrollLocation(this.anchors, offset + offsetShift) // add offsetShift /ardas
-    console.log('handleScroll bestAnchorId', bestAnchorId);
 
     if (bestAnchorId && getHash() !== bestAnchorId) {
       this.forcedHash = true
